@@ -73,7 +73,8 @@ ON
 	`pages`.`ClassName` = `do`.`OwnerClassName`
 WHERE
 	`pages`.`ID` = `pages`.`OwnerID` AND
-    `pages`.`ClassName` = `pages`.`OwnerClassName`
+    `pages`.`ClassName` = `pages`.`OwnerClassName` AND
+    MATCH (`do`.`Title`, `do`.`Content`) AGAINST ('$input' IN NATURAL LANGUAGE MODE)
 GROUP BY
 	`pages`.`ID`,
 	`pages`.`ClassName`
