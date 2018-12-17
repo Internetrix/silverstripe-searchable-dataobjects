@@ -95,6 +95,18 @@ class PopulateSearch extends BuildTask {
 		);
 
 		// run query ...
+        // Hack for Symbiote build system. We can't run the task to create the table during the Symbiote build process, thus fails on test cases.
+        DB::query("CREATE TABLE IF NOT EXISTS SearchableDataObjects (
+													ID int(10) unsigned NOT NULL,
+													ClassName varchar(255) NOT NULL,
+													Title varchar(255) NOT NULL,
+													Content text NOT NULL,
+													PageID integer NOT NULL DEFAULT 0,
+													OwnerID integer NOT NULL DEFAULT 0,
+													OwnerClassName varchar(255) NOT NULL,
+													PRIMARY KEY(ID, ClassName)
+												) ENGINE=MyISAM");
+        
 		DB::query($query);
 	}
 
